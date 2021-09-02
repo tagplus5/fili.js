@@ -143,7 +143,7 @@ var FirCoeffs = function () {
   }
   var self = {
     lowpass: function (params) {
-      return calcImpulseResponse(params)
+      return calcImpulseResponseHanning(params)
     },
     lowpassHanning: function (params) {
       return calcImpulseResponseHanning(params)
