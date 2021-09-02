@@ -84,6 +84,37 @@ var FirCoeffs = function () {
     }
     return ret
   }
+
+  // note: coefficients are equal to impulse response
+  // windowd sinc filter
+  var calcImpulseResponseHanning = function (params) {
+    var Fs = params.Fs
+    var Fc = params.Fc
+    var o = params.order
+    var omega = 2 * Math.PI * Fc / Fs
+    var cnt = 0
+    var dc = 0
+    var ret = []
+    // sinc function is considered to be
+    // the ideal impulse response
+    // do an idft and use Hanning window afterwards
+    for (cnt = 0; cnt <= o; cnt++) {
+      if (cnt - o / 2 === 0) {
+        ret[cnt] = omega
+      } else {
+        ret[cnt] = Math.sin(omega * (cnt - o / 2)) / (cnt - o / 2)
+        // Hanning window
+        ret[cnt] *= (0.5 * (1 - Math.cos(2 * Math.PI * cnt / o)))
+      }
+      dc = dc + ret[cnt]
+    }
+    // normalize
+    for (cnt = 0; cnt <= o; cnt++) {
+      ret[cnt] /= dc
+    }
+    return ret
+  }
+
   // invert for highpass from lowpass
   var invert = function (h) {
     var cnt
@@ -114,6 +145,9 @@ var FirCoeffs = function () {
     lowpass: function (params) {
       return calcImpulseResponse(params)
     },
+    lowpassHanning: function (params) {
+      return calcImpulseResponseHanning(params)
+    },
     highpass: function (params) {
       return invert(calcImpulseResponse(params))
     },
@@ -127,7 +161,7 @@ var FirCoeffs = function () {
       return calcKImpulseResponse(params)
     },
     available: function () {
-      return ['lowpass', 'highpass', 'bandstop', 'bandpass', 'kbFilter']
+      return ['lowpass', 'lowpassHanning', 'highpass', 'bandstop', 'bandpass', 'kbFilter']
     }
   }
   return self
