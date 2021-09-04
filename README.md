@@ -5,6 +5,10 @@
 
 A digital filter library for JavaScript.
 
+## WARNING
+
+lowpass FIR Filter use Hanning window
+
 ## Installation
 
 ```
