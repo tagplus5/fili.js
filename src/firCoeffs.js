@@ -124,6 +124,7 @@ var FirCoeffs = function () {
     h[(h.length - 1) / 2]++
     return h
   }
+
   var bs = function (params) {
     var lp = calcImpulseResponse({
       order: params.order,
@@ -141,11 +142,9 @@ var FirCoeffs = function () {
     }
     return out
   }
+
   var self = {
     lowpass: function (params) {
-      return calcImpulseResponseHanning(params)
-    },
-    lowpassHanning: function (params) {
       return calcImpulseResponseHanning(params)
     },
     highpass: function (params) {
@@ -161,7 +160,7 @@ var FirCoeffs = function () {
       return calcKImpulseResponse(params)
     },
     available: function () {
-      return ['lowpass', 'lowpassHanning', 'highpass', 'bandstop', 'bandpass', 'kbFilter']
+      return ['lowpass', 'highpass', 'bandstop', 'bandpass', 'kbFilter']
     }
   }
   return self
