@@ -12,7 +12,7 @@
     "browserify": "^10.2.4",
     "envify": "^3.4.0",
     "istanbul": "^0.3.21",
-    "mocha": "^2.2.5",
+    "mocha": "^10.2.0",
     "should": "^6.0.3",
     "standard": "^8.5.0",
     "uglify-js": "^2.4.23"
